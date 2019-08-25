@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import firebase from '../firebase'
+import {fb} from '../firebase'
 export default {
   name: "Login",
   props: {
@@ -87,8 +87,12 @@ return{
   },
   methods:{
       register(){
-          firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
-    .catch(function(error) {
+          fb.auth().createUserWithEmailAndPassword(this.email, this.password)
+            .then((user)=> {
+                $('#login').modal('hide');
+                this.$router.replace('admin');
+    })
+          .catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
   var errorMessage = error.message;
